@@ -4,17 +4,35 @@ using UnityEngine;
 
 public class Managers : MonoBehaviour
 {
-    static Managers Instance; // 유일성이 보장된다
-    static Managers GetInstance() { return Instance; }
+    static Managers s_Instance; // 유일성이 보장된다
+    public static Managers Instance { get { Init(); return s_Instance; } }
     // Start is called before the first frame update
     void Start()
     {
-        
+        Init();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    static void Init()
+    {
+        if (s_Instance == null)
+        {
+            GameObject go = GameObject.Find("@Managers");
+            if (go == null)
+            {
+                go = new GameObject { name = "@Managers" };
+                go.AddComponent<Managers>();
+            }
+
+            DontDestroyOnLoad(go);
+
+            s_Instance = go.GetComponent<Managers>();
+
+        }
     }
 }
