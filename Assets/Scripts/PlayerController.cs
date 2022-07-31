@@ -9,21 +9,35 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Managers.Input.KeyAction -= onKeyboard;
+        Managers.Input.KeyAction += onKeyboard;
     }
 
-    // GameObject (Player)
-        // Transform
-        // PlayerController (*)
-    // Update is called once per frame
     void Update()
     {
+    }
+
+    void onKeyboard()
+    {
         if (Input.GetKey(KeyCode.W))
-            transform.position += transform.TransformDirection(Vector3.forward * Time.deltaTime * _speed);
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.2f);
+            transform.position += (Vector3.forward * Time.deltaTime * _speed);
+        }
         if (Input.GetKey(KeyCode.S))
-            transform.position += transform.TransformDirection(Vector3.back * Time.deltaTime * _speed);
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.2f);
+            transform.position += (Vector3.back * Time.deltaTime * _speed);
+        }
         if (Input.GetKey(KeyCode.A))
-            transform.position += transform.TransformDirection(Vector3.left * Time.deltaTime * _speed);
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.5f);
+            transform.position += (Vector3.left * Time.deltaTime * _speed);
+        }
         if (Input.GetKey(KeyCode.D))
-            transform.position += transform.TransformDirection(Vector3.right * Time.deltaTime * _speed);
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.5f);
+            transform.position += (Vector3.right * Time.deltaTime * _speed);
+        }
     }
 }
